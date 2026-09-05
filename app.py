@@ -29,9 +29,9 @@ st.markdown(
 )
 
 # Configurações básicas
-numero_whatsapp = "5531999999999"  # Coloque seu número com DDD
+numero_whatsapp = "5531989684010"  # Coloque seu número com DDD
 chave_pix = (
-    "sua-chave-pix-aqui@email.com"  # Coloque sua Chave PIX (CPF, CNPJ, E-mail, Celular)
+    "31989684010"  # Coloque sua Chave PIX (CPF, CNPJ, E-mail, Celular)
 )
 
 # 1. SISTEMA DE LOGIN SIMPLES
