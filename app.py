@@ -1,25 +1,78 @@
 import urllib.parse
 import streamlit as st
 
-# Configuração da página
+# Configuração da página (otimizada para visual mobile)
 st.set_page_config(
-    page_title="Catálogo de Cosméticos", page_icon="💄", layout="wide"
+    page_title="L&V Cosméticos", page_icon="💄", layout="centered"
 )
 
-st.title("🛍️ Catálogo de Cosméticos - Natura, Boticário e Avon")
-st.write("Encontre os melhores produtos de beleza em um só lugar!")
-
-# SEU NÚMERO DO WHATSAPP (Coloque seu código do país + DDD + número, sem espaços ou símbolos)
-# Exemplo para Belo Horizonte/MG: "5531989684010"
-numero_whatsapp = "5531989684010"
-
-# Menu lateral para escolher a marca
-st.sidebar.header("Filtros")
-marca_selecionada = st.sidebar.selectbox(
-    "Escolha a Marca:", ["Todas", "Natura", "Boticário", "Avon"]
+# Estilização CSS para dar cara de App Mobile
+st.markdown(
+    """
+    <style>
+    /* Fundo geral e fonte */
+    .stApp {
+        background-color: #f8f9fa;
+    }
+    
+    /* Estilo dos cards de produtos */
+    .produto-card {
+        background-color: #ffffff;
+        padding: 16px;
+        border-radius: 16px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        margin-bottom: 16px;
+        border: 1px solid #eaeaea;
+    }
+    
+    /* Título do produto no card */
+    .produto-titulo {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333333;
+        margin-bottom: 4px;
+    }
+    
+    /* Detalhes do produto */
+    .produto-detalhe {
+        font-size: 14px;
+        color: #666666;
+        margin-bottom: 2px;
+    }
+    
+    /* Preço destacado */
+    .produto-preco {
+        font-size: 18px;
+        font-weight: bold;
+        color: #d63384;
+        margin-bottom: 12px;
+    }
+    </style>
+""",
+    unsafe_allow_html=True,
 )
 
-# Simulando uma base de dados de produtos
+# Cabeçalho estilo App
+st.markdown(
+    "<h2 style='text-align: center; color: #d63384;'>💄 L&V Cosméticos</h2>",
+    unsafe_allow_html=True,
+)
+st.markdown(
+    "<p style='text-align: center; color: gray;'>Natura • Boticário • Avon</p>",
+    unsafe_allow_html=True,
+)
+
+# Número do WhatsApp para onde os pedidos vão
+numero_whatsapp = "5531999999999"  # Substitua pelo seu número
+
+# Filtros em formato limpo
+marca_selecionada = st.selectbox(
+    "Filtrar por Marca:", ["Todas", "Natura", "Boticário", "Avon"]
+)
+
+st.markdown("---")
+
+# Base de produtos simulada
 produtos = [
     {
         "nome": "Perfume Kaiak",
@@ -59,7 +112,7 @@ produtos = [
     },
 ]
 
-# Filtrando os produtos conforme a escolha do usuário
+# Filtrando os produtos
 if marca_selecionada != "Todas":
   produtos_filtrados = [
       p for p in produtos if p["marca"] == marca_selecionada
@@ -67,49 +120,37 @@ if marca_selecionada != "Todas":
 else:
   produtos_filtrados = produtos
 
-# Exibindo os produtos em colunas na tela
-col1, col2 = st.columns(2)
-
+# Exibindo os produtos em formato de "Cards" estilo mobile
 for i, prod in enumerate(produtos_filtrados):
-  # Alterna entre as colunas para organizar o layout
-  with col1 if i % 2 == 0 else col2:
-    st.subheader(prod["nome"])
-    st.write(f"**Marca:** {prod['marca']}")
-    st.write(f"**Categoria:** {prod['tipo']}")
-    st.write(f"**Preço:** {prod['preco']}")
+  mensagem = (
+      f"Olá! Gostaria de comprar o produto: {prod['nome']} ({prod['marca']}) por"
+      f" {prod['preco']}."
+  )
+  mensagem_codificada = urllib.parse.quote(mensagem)
+  link_whatsapp = f"https://wa.me/{numero_whatsapp}?text={mensagem_codificada}"
 
-    # Mensagem que vai chegar para você no WhatsApp
-    mensagem = (
-        f"Olá! Gostaria de comprar o produto: {prod['nome']} ({prod['marca']})"
-        f" por {prod['preco']}."
-    )
-
-    # Codifica a mensagem para o formato de URL
-    mensagem_codificada = urllib.parse.quote(mensagem)
-
-    # Cria o link do WhatsApp
-    link_whatsapp = (
-        f"https://wa.me/{numero_whatsapp}?text={mensagem_codificada}"
-    )
-
-    # Botão estilizado do WhatsApp
-    st.markdown(
-        f"""
-        <a href="{link_whatsapp}" target="_blank" style="text-decoration: none;">
-            <button style='
-                background-color: #25D366; 
-                color: white; 
-                padding: 10px 20px; 
-                border: none; 
-                border-radius: 5px; 
-                cursor: pointer; 
-                font-weight: bold;
-                width: 100%;'>
-                💬 Pedir no WhatsApp
-            </button>
-        </a>
-        """,
-        unsafe_allow_html=True,
-    )
-
-    st.markdown("---")
+  # Estrutura visual em cartão
+  st.markdown(
+      f"""
+        <div class="produto-card">
+            <div class="produto-titulo">{prod['nome']}</div>
+            <div class="produto-detalhe"><b>Marca:</b> {prod['marca']} | <b>Categoria:</b> {prod['tipo']}</div>
+            <div class="produto-preco">{prod['preco']}</div>
+            <a href="{link_whatsapp}" target="_blank" style="text-decoration: none;">
+                <button style='
+                    background-color: #25D366; 
+                    color: white; 
+                    padding: 10px 15px; 
+                    border: none; 
+                    border-radius: 8px; 
+                    cursor: pointer; 
+                    font-weight: bold;
+                    width: 100%;
+                    font-size: 14px;'>
+                    💬 Comprar pelo WhatsApp
+                </button>
+            </a>
+        </div>
+    """,
+      unsafe_allow_html=True,
+  )
