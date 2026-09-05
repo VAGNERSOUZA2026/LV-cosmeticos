@@ -2,7 +2,7 @@ import urllib.parse
 import streamlit as st
 
 # Exemplo de número de WhatsApp (substitua pelo seu DDD e número, sem espaços ou símbolos)
-numero_whatsapp = "5531999999999"
+numero_whatsapp = "5531989684010"
 
 # Exibindo os produtos
 for i, prod in enumerate(produtos_filtrados):
