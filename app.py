@@ -10,8 +10,8 @@ st.title("🛍️ Catálogo de Cosméticos - Natura, Boticário e Avon")
 st.write("Encontre os melhores produtos de beleza em um só lugar!")
 
 # SEU NÚMERO DO WHATSAPP (Coloque seu código do país + DDD + número, sem espaços ou símbolos)
-# Exemplo para Belo Horizonte/MG: "5531988887777"
-numero_whatsapp = "5531999999999"
+# Exemplo para Belo Horizonte/MG: "5531989684010"
+numero_whatsapp = "5531989684010"
 
 # Menu lateral para escolher a marca
 st.sidebar.header("Filtros")
